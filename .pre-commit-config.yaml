@@ -1,0 +1,40 @@
+exclude: |
+    (?x)(
+         ^messy_dir/|
+         ^messy_dir2/
+    )
+
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v3.2.0
+    hooks:
+    -  id: trailing-whitespace
+       exclude: ^.*\.(md)$
+    -  id: end-of-file-fixer
+       exclude: ^.*\.(md)$
+    -  id: check-yaml
+    -  id: check-added-large-files
+
+# https://stackoverflow.com/questions/58295748/pre-commit-hook-failing-for-a-python-project
+  - repo: https://github.com/asottile/reorder_python_imports
+    rev: v2.6.0
+    hooks:
+    - id: reorder-python-imports
+
+  - repo: https://github.com/psf/black
+    rev: 21.5b2
+    hooks:
+    -  id: black
+
+  - repo: local
+    hooks:
+    -  id: system
+       name: pylint
+       language: system
+       types: [python]
+       entry: pylint --rcfile=pylintrc
+
+  - repo: https://github.com/iamthefij/docker-pre-commit
+    rev: 9a22a2046c
+    hooks:
+    -  id: docker-compose-check
