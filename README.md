@@ -1,5 +1,8 @@
 # Overview
 Basic template for python projects. 
+Includes
+* precommit configuration
+* alembic configuration w/SQLAlchemy
 
 # Precommit
 An excellent tool for automatic code checks. 
@@ -17,4 +20,10 @@ target_metadata = Base.metadata
 ```
 * Starting with blank schema, `alembic revision -m "init"` followed by `alembic upgrade head` will initialize the database (db.db). 
 * Changes to `database/schema.py` are then registered with `alembic revision --autogenerate -m "rev name"` and `alembic upgrade head`. 
+
+# First usage
+* `cp env.sample .env`
+* `alembic upgrade head`
+* `python -i scripts/database_exercise.py` writes and deletes a single dummy user. 
+
 
