@@ -1,6 +1,7 @@
 exclude: |
     (?x)(
          ^messy_dir/|
+         ^alembic/|
          ^messy_dir2/
     )
 
