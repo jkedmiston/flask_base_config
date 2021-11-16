@@ -2,7 +2,7 @@
 Basic template for python projects. 
 Includes
 * precommit configuration
-* alembic configuration w/SQLAlchemy
+* Flask app with Flask-SQLAlchemy, Celery
 
 # Precommit
 An excellent tool for automatic code checks. 

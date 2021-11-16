@@ -1,11 +1,10 @@
-# set up celery for syncing runcards on a schedule
 import os
 from main import create_app
 from datetime import timedelta
 from extensions import celery
 
 # https://docs.celeryproject.org/en/stable/userguide/periodic-tasks.html#beat-entries
-celery.conf.beat_schedule = {'start-work': {'task': 'tasks.celery_add_ex',
+celery.conf.beat_schedule = {'start-work': {'task': 'tasks.update_number',
                                             'schedule': timedelta(seconds=10)}}
 
 celery.conf.timezone = 'UTC'
@@ -16,10 +15,12 @@ from extensions import db  # noqa
 
 
 @celery.task
-def celery_add_ex():
-    """adds a random number to a database"""
+def update_number():
+    """
+    Updates/adds a random number to a database
+    This demonstrates database is accessible on the workers. 
+    """
     import numpy as np
-    from extensions import db  # noqa
     from database.schema import RandomData
     rd = RandomData.query.get(1)
     if rd is None:

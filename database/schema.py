@@ -26,3 +26,9 @@ class Plant(db.Model):
     __tablename__ = "plant"
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String)
+
+
+class RandomData(db.Model):
+    __tablename__ = "random_data"
+    id = db.Column(db.Integer, primary_key=True)
+    value = db.Column(db.Float)

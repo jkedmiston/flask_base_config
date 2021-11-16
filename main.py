@@ -1,6 +1,5 @@
-from flask import Flask, request, g, _app_ctx_stack
+from flask import Flask, request, g
 from flask_cors import CORS
-from sqlalchemy.orm import scoped_session
 
 import time
 import datetime
@@ -9,7 +8,8 @@ from extensions import db, migrate, csrf
 from flask_talisman import Talisman
 import logging
 from logging import Formatter, FileHandler
-
+from blueprints.contact import contact
+from blueprints.main import main_bp
 
 logger = logging.getLogger('logger')
 file_handler = FileHandler('logger.log')
@@ -29,6 +29,7 @@ logger.setLevel(logging.INFO)
 
 def register_request_logger(app):
     def _before_request():
+        # https://programtalk.com/python-examples/flask.g.start_time/
         g.request_start_time = time.time()
         if request.headers.get('X-Forwarded-Proto') == 'http':
             url = request.url.replace('http://', 'https://', 1)
@@ -68,7 +69,7 @@ def register_request_logger(app):
 
 
 def register_extensions(app):
-    from extensions import db, migrate, csrf
+    # from extensions import db, migrate, csrf
     db.init_app(app)
     migrate.init_app(app, db)
     csrf.init_app(app)
@@ -88,22 +89,21 @@ def register_context_processors(app):
         """
         urls_info = {
             "main": {
-                "google_scholar": "https://scholar.google.com/citations?user=95tccioAAAAJ&hl=en",
-                "github": "https://github.com/jkedmiston/portfolio",
+                "ref1": "https://scholar.google.com/citations?user=95tccioAAAAJ&hl=en",
+                "ref2": "https://github.com/jkedmiston/portfolio",
             }
         }
         return {'urls': urls_info}
 
 
 def create_app():
-    from views.main_bp import main_bp
+    # from views.main_bp import main_bp
     from config import Config
 
     app = Flask(__name__, instance_relative_config=False,
                 template_folder="templates", static_folder="static")
 
     CORS(app)
-
     csp = {'default-src': ['\'self\'', '\'unsafe-inline\'', 'https://cdnjs.cloudflare.com', "cdnjs.cloudflare.com", "'unsafe-eval'", "*.gstatic.com", "*.fontawesome.com", "fonts.googleapis.com", "data:", "storage.googleapis.com"],
            'font-src': ['\'self\'', 'data', '*', 'https://use.fontawesome.com'],
            'script-src': ['\'self\'', "'unsafe-eval'", "'unsafe-inline'"],
@@ -118,6 +118,7 @@ def create_app():
         register_request_logger(app)
         # register_admin_panel(app)
         app.register_blueprint(main_bp)
+        app.register_blueprint(contact)  # alternate import pattern
         register_context_processors(app)
         app.logger = logger
         return app

@@ -8,4 +8,11 @@ psycopg2-binary
 sqlalchemy
 flask-sqlalchemy
 flask-migrate
-flask-wtf
+redis
+numpy
+pandas
+WTForms-Components
+WTForms
+Flask-WTF
+werkzeug
+
