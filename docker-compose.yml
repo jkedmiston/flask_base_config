@@ -1,7 +1,7 @@
 version: '3.4'
 
 services:
-    webapp: 
+    webapp:
         build:
             context: .
             dockerfile: Dockerfile
@@ -18,7 +18,7 @@ services:
             - SECRET_KEY
             - FLASK_DEBUG=1
             - REDIS_URL
-            
+
         stdin_open: true
         tty: true
         ports:
@@ -36,10 +36,10 @@ services:
             - database
             - redis
             - beat
-            
+
         environment:
             - DATABASE_URL=postgresql://postgres_user:postgres_password@database:5432
-            - FLASK_DEBUG=1            
+            - FLASK_DEBUG=1
             - SECRET_KEY
             - REDIS_URL
 
@@ -53,8 +53,8 @@ services:
             - redis
 
         environment:
-            - DATABASE_URL=postgresql://postgres_user:postgres_password@database:5432            
-            - FLASK_DEBUG=1        
+            - DATABASE_URL=postgresql://postgres_user:postgres_password@database:5432
+            - FLASK_DEBUG=1
             - SECRET_KEY
             - REDIS_URL
 
@@ -65,7 +65,7 @@ services:
           - '6579:6379'
         volumes:
           - persistent_redis:/var/lib/redis/data
-        
+
     database:
         environment:
           POSTGRES_USER: postgres_user

@@ -12,14 +12,14 @@ def fetch_from_env_or_fail(key):
     value = os.environ.get(key)
     if value:
         return value
-    else:
-        raise KeyError('"%s" is required. ' % key)
+    raise KeyError('"%s" is required. ' % key)
 
 
 class Config:
-    '''Global configuration variables.'''
+    """Global configuration variables."""
+
     FLASK_DEBUG = fetch_from_env_or_fail("FLASK_DEBUG")
-    REDIS_URL = fetch_from_env_or_fail('REDIS_URL')
-    SQLALCHEMY_DATABASE_URI = fetch_from_env_or_fail('DATABASE_URL')
+    REDIS_URL = fetch_from_env_or_fail("REDIS_URL")
+    SQLALCHEMY_DATABASE_URI = fetch_from_env_or_fail("DATABASE_URL")
     SQLALCHEMY_TRACK_MODIFICATIONS = False
-    SECRET_KEY = fetch_from_env_or_fail('SECRET_KEY')
+    SECRET_KEY = fetch_from_env_or_fail("SECRET_KEY")

@@ -9,5 +9,3 @@ fi
 echo "entry point done"
 echo "$@"
 exec "$@"
-
-

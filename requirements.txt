@@ -15,4 +15,3 @@ WTForms-Components
 WTForms
 Flask-WTF
 werkzeug
-
