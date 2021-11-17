@@ -12,7 +12,6 @@ from flask import Flask
 from flask import g
 from flask import redirect
 from flask import request
-from flask_cors import CORS
 from flask_talisman import Talisman
 
 from blueprints.contact import contact
@@ -87,7 +86,8 @@ def register_extensions(app):
     db.init_app(app)
     migrate.init_app(app, db)
     csrf.init_app(app)
-    # link in models, c.f. https://github.com/miguelgrinberg/Flask-Migrate/issues/50
+    # link in models for migration scripts,
+    # c.f. https://github.com/miguelgrinberg/Flask-Migrate/issues/50
     import database.schema  # pylint: disable=unused-import
 
 
@@ -120,7 +120,6 @@ def create_app():
         static_folder="static",
     )
 
-    CORS(app)
     csp = {
         "default-src": [
             "'self'",
