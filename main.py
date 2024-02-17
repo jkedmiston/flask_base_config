@@ -20,15 +20,18 @@ from config import Config
 from extensions import csrf
 from extensions import db
 from extensions import migrate
+from admin_panel import add_admin_app
 
 logger = logging.getLogger("logger")
 file_handler = FileHandler("logger.log")
 handler = logging.StreamHandler()
 file_handler.setFormatter(
-    Formatter("%(asctime)s %(levelname)s: %(message)s " "[in %(pathname)s:%(lineno)d]")
+    Formatter(
+        "%(asctime)s %(levelname)s: %(message)s " "[in %(pathname)s:%(lineno)d]")
 )
 handler.setFormatter(
-    Formatter("%(asctime)s %(levelname)s: %(message)s " "[in %(pathname)s:%(lineno)d]")
+    Formatter(
+        "%(asctime)s %(levelname)s: %(message)s " "[in %(pathname)s:%(lineno)d]")
 )
 logger.addHandler(file_handler)
 logger.addHandler(handler)
@@ -110,6 +113,11 @@ def register_context_processors(app):
         return {"urls": urls_info}
 
 
+def register_admin_panel(app):
+    admin = add_admin_app(app)
+    return admin
+
+
 def create_app():
     # from views.main_bp import main_bp
 
@@ -155,7 +163,7 @@ def create_app():
     with app.app_context():
         register_extensions(app)
         register_request_logger(app)
-        # register_admin_panel(app)
+        register_admin_panel(app)
         app.register_blueprint(main_bp)
         app.register_blueprint(contact)  # alternate import pattern
         register_context_processors(app)

@@ -16,3 +16,5 @@ WTForms
 Flask-WTF
 werkzeug
 pytest
+Flask-Admin
+flask-login
